@@ -1,0 +1,31 @@
+{
+  "name": "fanfluence-fansuite",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "npm run dev -w @fanfluence/server",
+    "build": "npm run build -w @fanfluence/server",
+    "typecheck": "npm run typecheck -w @fanfluence/server",
+    "test": "npm run test -w @fanfluence/server",
+    "migrate": "npm run migrate -w @fanfluence/server",
+    "seed": "npm run seed -w @fanfluence/server",
+    "dev:client": "npm run dev -w @fanfluence/client",
+    "build:client": "npm run build -w @fanfluence/client"
+  },
+  "workspaces": [
+    "apps/*"
+  ],
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true,
+    "better-sqlite3@13.0.3": true,
+    "esbuild@0.28.2": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.18.20": true
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3"
+  }
+}

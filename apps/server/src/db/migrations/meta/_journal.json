@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788099041007,
+      "tag": "0000_odd_boomer",
+      "breakpoints": true
+    }
+  ]
+}
