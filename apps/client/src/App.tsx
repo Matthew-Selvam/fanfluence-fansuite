@@ -3,6 +3,7 @@ import { Layout } from './components/Layout'
 import { Dashboard } from './pages/Dashboard'
 import { Characters } from './pages/Characters'
 import { Fans } from './pages/Fans'
+import { SettingsPage } from './pages/Settings'
 import { CharacterDetail, FanDetail, Studio, Campaigns, Providers } from './pages/Placeholders'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="studio" element={<Studio />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="providers" element={<Providers />} />
+          <Route path="settings" element={<SettingsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
