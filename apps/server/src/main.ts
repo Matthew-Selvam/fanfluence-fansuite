@@ -12,10 +12,13 @@ import { EventBus } from './events/bus.js';
 import { AuditLog } from './services/audit.js';
 import { CharacterService } from './services/characters.js';
 import { FanService } from './services/fans.js';
-import { WardrobeService, HomeService, BrandDealService, ScriptService, ContentProjectService } from './services/studio.js';
+import { WardrobeService, HomeService, BrandDealService, ScriptService, ContentProjectService, InspirationService } from './services/studio.js';
 import { SecretStore, generateMasterKey, deriveKey } from './services/secrets.js';
 import { AssetStorage } from './services/storage.js';
 import { RateLimiter } from './services/rateLimit.js';
+import { MediaService } from './services/media.js';
+import { GenerationService } from './services/generation.js';
+import { JobQueue } from './jobs/queue.js';
 
 import { createDefaultRegistry } from './providers/registry.js';
 import { ProviderRouter } from './providers/router.js';
@@ -27,6 +30,9 @@ import { registerFanRoutes } from './api/fans.js';
 import { registerWardrobeRoutes, registerScriptRoutes, registerBrandDealRoutes, registerContentProjectRoutes } from './api/studio.js';
 import { registerHealthRoutes } from './api/health.js';
 import { registerMediaRoutes } from './api/media.js';
+import { registerInspirationRoutes } from './api/inspiration.js';
+import { registerHomeRoutes } from './api/homes.js';
+import { registerGenerationRoutes } from './api/generation.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -58,6 +64,7 @@ async function main() {
   const brandDeals = new BrandDealService(db, events, audit, clock);
   const scripts = new ScriptService(db, events, clock);
   const studio = new ContentProjectService(db, clock);
+  const inspirations = new InspirationService(db, clock);
 
   const secretKey = loadPersistentSecretKey(config);
   const key = deriveKey(secretKey);
@@ -69,6 +76,9 @@ async function main() {
   // ── Providers ─────────────────────────────────────────────────────────────
   const registry = createDefaultRegistry();
   const router = new ProviderRouter(db, registry, secrets, log.child({ service: 'router' }));
+  const media = new MediaService(db, storage, events, audit, clock);
+  const queue = new JobQueue(db, clock);
+  const generation = new GenerationService(db, queue, router, media, events, rateLimiter, clock);
 
   // ── Fastify ───────────────────────────────────────────────────────────────
   const app = Fastify({
@@ -108,6 +118,9 @@ async function main() {
   registerBrandDealRoutes(app, brandDeals);
   registerContentProjectRoutes(app, studio, db);
   registerMediaRoutes(app, { db, storage, events, audit, clock });
+  registerInspirationRoutes(app, inspirations);
+  registerHomeRoutes(app, homes);
+  registerGenerationRoutes(app, generation);
 
   // SSE event stream
   app.get('/api/events/stream', async (req, reply) => {

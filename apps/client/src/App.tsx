@@ -4,7 +4,8 @@ import { Dashboard } from './pages/Dashboard'
 import { Characters } from './pages/Characters'
 import { Fans } from './pages/Fans'
 import { SettingsPage } from './pages/Settings'
-import { CharacterDetail, FanDetail, Studio, Campaigns, Providers } from './pages/Placeholders'
+import { Studio } from './pages/Studio'
+import { CharacterDetail, FanDetail, Campaigns, Providers } from './pages/Placeholders'
 
 export default function App() {
   return (
