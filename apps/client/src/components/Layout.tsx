@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen bg-[#07070A]">
+    <div className="flex min-h-screen bg-[#111844]">
       <Sidebar />
       <main className="flex-1 overflow-auto relative">
         <div className="ambient-grid absolute inset-0 pointer-events-none" />
