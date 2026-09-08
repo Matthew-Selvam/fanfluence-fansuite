@@ -36,8 +36,8 @@ import { registerGenerationRoutes } from './api/generation.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-async function main() {
-  const config = loadConfig();
+export async function createApp(config?: ReturnType<typeof loadConfig>) {
+  config = config ?? loadConfig();
   const log = createLogger({ service: 'fanfluence', level: config.logLevel });
 
   log.info('booting', { mode: config.mode, dataDir: config.dataDir });
@@ -160,6 +160,7 @@ async function main() {
   const host = config.allowLanBinding ? '0.0.0.0' : '127.0.0.1';
   await app.listen({ port: config.port, host });
   log.info('listening', { host, port: config.port, mode: config.mode });
+  return app;
 }
 
 function loadPersistentSecretKey(config: ReturnType<typeof loadConfig>): string {
@@ -179,8 +180,3 @@ function loadPersistentSecretKey(config: ReturnType<typeof loadConfig>): string 
   chmodSync(keyPath, 0o600);
   return key;
 }
-
-main().catch((err) => {
-  console.error('fatal boot error:', err);
-  process.exit(1);
-});
