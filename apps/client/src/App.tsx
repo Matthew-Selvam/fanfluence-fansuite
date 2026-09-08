@@ -5,7 +5,9 @@ import { Characters } from './pages/Characters'
 import { Fans } from './pages/Fans'
 import { SettingsPage } from './pages/Settings'
 import { Studio } from './pages/Studio'
-import { CharacterDetail, FanDetail, Campaigns, Providers } from './pages/Placeholders'
+import { Campaigns } from './pages/Campaigns'
+import { CrmDashboard } from './pages/CrmDashboard'
+import { CharacterDetail, FanDetail, Providers } from './pages/Placeholders'
 
 export default function App() {
   return (
@@ -18,6 +20,7 @@ export default function App() {
           <Route path="fans" element={<Fans />} />
           <Route path="fans/:id" element={<FanDetail />} />
           <Route path="studio" element={<Studio />} />
+          <Route path="crm" element={<CrmDashboard />} />
           <Route path="campaigns" element={<Campaigns />} />
           <Route path="providers" element={<Providers />} />
           <Route path="settings" element={<SettingsPage />} />

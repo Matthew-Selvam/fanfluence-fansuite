@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Users, UserCircle, Palette, Send, Cpu, Settings, LayoutDashboard, Sparkles, ChevronLeft, Menu, X, Search } from 'lucide-react'
+import { Users, UserCircle, Palette, Send, Cpu, Settings, LayoutDashboard, Sparkles, ChevronLeft, Menu, X, Search, HeartHandshake } from 'lucide-react'
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -8,6 +8,7 @@ const navItems = [
   { to: '/characters', label: 'Characters', icon: UserCircle, badge: '2' },
   { to: '/fans', label: 'Fans', icon: Users, badge: '3' },
   { to: '/studio', label: 'Studio', icon: Palette },
+  { to: '/crm', label: 'CRM', icon: HeartHandshake },
   { to: '/campaigns', label: 'Campaigns', icon: Send },
   { to: '/providers', label: 'Providers', icon: Cpu },
   { to: '/settings', label: 'Settings', icon: Settings },

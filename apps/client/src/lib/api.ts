@@ -19,6 +19,7 @@ export interface Wardrobe { id: string; name: string; isDefault: boolean; charac
 export interface WardrobeItem { id: string; name: string; category: string; style?: string | null; favorite: boolean; locked: boolean }
 export interface Script { id: string; title: string; status: string; channel: string | null; hook?: string | null; body?: string | null; cta?: string | null }
 export interface BrandDeal { id: string; brand: string; stage: string; valueMinor: number; category?: string | null; approvalState?: string }
+export interface Campaign { id: string; name: string; objective: string; status: string }
 export interface InspirationBoard { id: string; name: string; description?: string | null; characterId?: string | null }
 export interface ContentProject { id: string; title: string; status: string; aspect: string; characterId?: string | null }
 export interface Brief { id: string; title: string; kind: string; status: string; characterId?: string | null; spec: any }
