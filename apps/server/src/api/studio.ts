@@ -90,7 +90,7 @@ export function registerContentProjectRoutes(
 
   app.patch('/api/content-projects/:id', async (req, reply) => {
     const { id } = req.params as { id: string };
-    const repo = new (require('../db/repository.js').Repository)(db, contentProjects, 'content project');
+    const repo = new Repository(db, contentProjects, 'content project');
     return repo.update(req.actor!.principal.workspaceId, id, req.body as any);
   });
 
