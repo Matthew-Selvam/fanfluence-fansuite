@@ -7,12 +7,6 @@ export function CharacterDetail() {
 export function FanDetail() {
   return <div className="text-[#b9b3c2] py-12">Fan detail — coming soon</div>
 }
-export function Studio() {
-  return <div className="text-[#b9b3c2] py-12">Studio — coming soon</div>
-}
-export function Campaigns() {
-  return <div className="text-[#b9b3c2] py-12">Campaigns — coming soon</div>
-}
 export function Providers() {
   return (
     <motion.div
