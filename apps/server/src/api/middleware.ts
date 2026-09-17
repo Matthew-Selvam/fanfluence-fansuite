@@ -20,8 +20,7 @@ export function actorFromRequest(req: FastifyRequest, config?: Pick<Config, 'bri
   const expected = config?.bridgeToken;
   const tokenMatches = Boolean(token && expected && safeTokenEqual(token, expected));
 
-  // Local development can use the anonymous viewer, but an API token is
-  // required for privileged access and for every non-dev deployment.
+  // Token-matched: always grants manager (cross-service / CI bridge).
   if (tokenMatches) {
     return {
       principal: { userId: 'api-user', workspaceId: 'default', role: 'manager' },
@@ -30,20 +29,22 @@ export function actorFromRequest(req: FastifyRequest, config?: Pick<Config, 'bri
     };
   }
 
-  if (config?.mode !== 'dev') {
-    throw new AppError('UNAUTHORIZED', 'Authentication required', {
-      reason: 'Provide a valid bearer token.',
-      affected: 'authentication',
-      remediation: ['reconnect'],
-      retryable: false,
-    });
+  // Dev mode: local browser access gets manager role (provider config, content creation).
+  if (config?.mode === 'dev') {
+    return {
+      principal: { userId: 'anonymous', workspaceId: 'default', role: 'manager' },
+      kind: 'user',
+      ip: req.ip,
+    };
   }
 
-  return {
-    principal: { userId: 'anonymous', workspaceId: 'default', role: 'viewer' },
-    kind: 'user',
-    ip: req.ip,
-  };
+  // All other modes (production, staging, etc.) require authentication.
+  throw new AppError('UNAUTHORIZED', 'Authentication required', {
+    reason: 'Provide a valid bearer token.',
+    affected: 'authentication',
+    remediation: ['reconnect'],
+    retryable: false,
+  });
 }
 
 export function createAuthHook(config: Pick<Config, 'bridgeToken' | 'mode'>) {

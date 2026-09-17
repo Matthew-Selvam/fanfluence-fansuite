@@ -15,7 +15,7 @@ describe('actorFromRequest', () => {
     expect(() => actorFromRequest(request('Bearer wrong'), { mode: 'production', bridgeToken: 'correct' })).toThrow(AppError);
   });
 
-  it('keeps unauthenticated development requests read-only', () => {
-    expect(actorFromRequest(request(), { mode: 'dev', bridgeToken: 'correct' }).principal.role).toBe('viewer');
+  it('grants the manager actor for dev mode (full local access)', () => {
+    expect(actorFromRequest(request(), { mode: 'dev' }).principal.role).toBe('manager');
   });
 });
